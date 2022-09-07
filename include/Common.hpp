@@ -16,4 +16,11 @@ namespace Requests
     static std::string Transactions = "Tran";
 }
 
+namespace StatusCodes
+{
+    static std::string EmptyUsernameForm = "EmptUsname";
+    static std::string UsernameAlreadyTaken = "UsernameTaken";
+    static std::string OK = "OK";
+
+}
 #endif //CLIENSERVERECN_COMMON_HPP

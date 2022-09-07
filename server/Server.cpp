@@ -2,7 +2,7 @@
 #include <iostream>
 #include <boost/bind/bind.hpp>
 #include "json.hpp"
-#include "Requests.hpp"
+#include "Common.hpp"
 #include "Server.hpp"
 #include "Core.hpp"
 

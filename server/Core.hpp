@@ -18,6 +18,9 @@ public:
     static Core& GetCore();
 
 private:
+
+    std::string ValidateUsername(const std::string &aUserName);
+
     // <UserId, UserName>
     std::map<size_t, std::string> mUsers;
 };

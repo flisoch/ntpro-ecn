@@ -1,6 +1,6 @@
 #include "Client.hpp"
 #include "json.hpp"
-#include "Requests.hpp"
+#include "Common.hpp"
 #include <iostream>
 
 Client::Client(boost::asio::io_service &io_service)
