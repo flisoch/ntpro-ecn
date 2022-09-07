@@ -1,13 +1,12 @@
-#ifndef TRADER_HPP
-#define TRADER_HPP
+#ifndef USER_H
+#define USER_H
 #pragma once
 
 #include <string>
 #include <vector>
 
-class Order;
 
-class Trader
+class User
 {
     class Balance
     {
@@ -17,13 +16,13 @@ class Trader
     };
 
 public:
-    Trader(std::string username);
-    Trader(unsigned long id, std::string username);
+    User() = default;
+    User(std::string username);
+    User(unsigned long id, std::string username);
 
     unsigned long id;
     std::string username;
     Balance balance;
-    std::vector<Order> orders;
 };
 
 #endif  //TRADER_HPP

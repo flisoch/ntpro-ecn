@@ -2,11 +2,13 @@
 #define ORDER_HPP
 #pragma once
 
-#include "Trader.hpp"
 #include <ctime>
 #include <chrono>
+#include <memory>
 
 using std::chrono::milliseconds;
+
+class Trader;
 
 class Order
 {
@@ -23,8 +25,8 @@ public:
     int amount = 0;
     int price = 0; // in rub
     Direction direction;
-    Trader trader;
+    std::shared_ptr<Trader> trader;
     milliseconds creationTime;
 };
 
-#endif ORDER_HPP
+#endif //ORDER_HPP

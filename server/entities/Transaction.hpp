@@ -12,4 +12,4 @@ private:
     void FillOrders();
 };
 
-#endif
+#endif  //TRANSACTION_HPP
