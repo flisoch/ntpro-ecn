@@ -1,5 +1,5 @@
-#include "Client.hpp"
 #include <iostream>
+#include "Client.hpp"
 
 int main()
 {

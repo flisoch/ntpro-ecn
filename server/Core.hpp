@@ -15,6 +15,7 @@ public:
 
     // Запрос имени клиента по ID
     std::string GetUserName(const std::string& aUserId);
+    static Core& GetCore();
 
 private:
     // <UserId, UserName>

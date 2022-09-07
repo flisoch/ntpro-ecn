@@ -22,3 +22,8 @@ std::string Core::GetUserName(const std::string &aUserId)
         return userIt->second;
     }
 }
+
+Core& Core::GetCore() {
+    static Core core;
+    return core;
+}

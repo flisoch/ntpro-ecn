@@ -1,8 +1,7 @@
-ADD_EXECUTABLE(ServerApp 
+ADD_LIBRARY(Server
     Server.cpp
     Core.cpp
-    Application.cpp
     entities/Trader.cpp
     entities/Order.cpp
 )
-TARGET_LINK_LIBRARIES(ServerApp PRIVATE Threads::Threads ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(Server PRIVATE Threads::Threads ${Boost_LIBRARIES})

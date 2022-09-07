@@ -4,15 +4,10 @@
 #include "json.hpp"
 #include "Requests.hpp"
 #include "Server.hpp"
+#include "Core.hpp"
 
 using boost::asio::ip::tcp;
 
-
-Core& GetCore()
-{
-    static Core core;
-    return core;
-}
 
 session::session(boost::asio::io_service &io_service)
     : socket_(io_service)
@@ -48,13 +43,13 @@ void session::handle_read(const boost::system::error_code &error,
         {
             // Это реквест на регистрацию пользователя.
             // Добавляем нового пользователя и возвращаем его ID.
-            reply = GetCore().RegisterNewUser(j["Message"]);
+            reply = Core::GetCore().RegisterNewUser(j["Message"]);
         }
         else if (reqType == Requests::Hello)
         {
             // Это реквест на приветствие.
             // Находим имя пользователя по ID и приветствуем его по имени.
-            reply = "Hello, " + GetCore().GetUserName(j["UserId"]) + "!\n";
+            reply = "Hello, " + Core::GetCore().GetUserName(j["UserId"]) + "!\n";
         }
 
         boost::asio::async_write(socket_,
@@ -82,6 +77,7 @@ void session::handle_write(const boost::system::error_code &error)
         delete this;
     }
 }
+
 
 server::server(boost::asio::io_service &io_service)
     : io_service_(io_service),

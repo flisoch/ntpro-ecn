@@ -3,9 +3,9 @@
 #pragma once
 
 #include <boost/asio.hpp>
-#include "Core.hpp"
 
 using boost::asio::ip::tcp;
+
 
 class session
 {
@@ -39,7 +39,6 @@ public:
     void handle_accept(session *new_session,
                        const boost::system::error_code &error);
     void run();
-
 private:
     boost::asio::io_service &io_service_;
     tcp::acceptor acceptor_;
