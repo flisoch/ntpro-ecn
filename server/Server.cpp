@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <iostream>
 #include <boost/bind/bind.hpp>
 #include "json.hpp"

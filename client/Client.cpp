@@ -16,17 +16,19 @@ Client::Client(boost::asio::io_service &io_service)
 
 void Client::StartUi()
 {
-    bool isAuthenticated = Authenticate();
-    while (!isAuthenticated)
+    std::string status = Authenticate();
+    while (status!=StatusCodes::OK)
     {
-        isAuthenticated = Authenticate();
+        std::cout << status << "\n";
+        status = Authenticate();
     }
     ShowMenu();
 }
 
-bool Client::Authenticate()
+std::string Client::Authenticate()
 {
-    bool isAuthenticated = false;
+    std::string status = StatusCodes::AuthenticationFailed;
+
     std::cout << "Sign up or sign in:\n"
                  "1) Sign up\n"
                  "2) Sign in\n"
@@ -41,7 +43,7 @@ bool Client::Authenticate()
     {
         ProcessRegistrationForm();
         ProcessRegistration();
-        isAuthenticated = true;
+        status = StatusCodes::OK;
         break;
     }
     case 2:
@@ -60,7 +62,7 @@ bool Client::Authenticate()
                   << std::endl;
     }
     }
-    return isAuthenticated;
+    return status;
 }
 
 void Client::ShowMenu()

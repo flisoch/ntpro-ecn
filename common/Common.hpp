@@ -21,6 +21,8 @@ namespace StatusCodes
     static std::string EmptyUsernameForm = "EmptUsname";
     static std::string UsernameAlreadyTaken = "UsernameTaken";
     static std::string OK = "OK";
+    static std::string AuthenticationFailed = "AuthFailed";
+
 
 }
 #endif //CLIENSERVERECN_COMMON_HPP

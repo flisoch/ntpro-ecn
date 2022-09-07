@@ -25,7 +25,7 @@ private:
     void ProcessRegistrationForm();
 
     void ShowMenu();
-    bool Authenticate();
+    std::string Authenticate();
 
     tcp::socket socket;
     boost::asio::io_service &io_service;
