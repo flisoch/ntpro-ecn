@@ -1,5 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.16.3)
-PROJECT(Client)
 
-ADD_EXECUTABLE(ClientAppCLI Client.cpp)
-TARGET_LINK_LIBRARIES(ClientAppCLI PRIVATE Threads::Threads ${Boost_LIBRARIES})
+ADD_LIBRARY(Client 
+    Client.cpp
+    model/User.cpp
+    )
+TARGET_LINK_LIBRARIES(Client PRIVATE Threads::Threads ${Boost_LIBRARIES})

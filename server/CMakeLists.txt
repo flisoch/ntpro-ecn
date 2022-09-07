@@ -1,8 +1,7 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.16.3)
-PROJECT(Server)
-
-ADD_EXECUTABLE(ServerApp 
+ADD_LIBRARY(Server
     Server.cpp
-    entities/Order.cpp
+    Core.cpp
+    model/Trader.cpp
+    model/Order.cpp
 )
-TARGET_LINK_LIBRARIES(ServerApp PRIVATE Threads::Threads ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(Server PRIVATE Threads::Threads ${Boost_LIBRARIES})
