@@ -4,25 +4,29 @@
 
 
 #include <string>
-#include <map>
+#include <vector>
+#include <memory>
+#include "model/Trader.hpp"
+#include "Message.hpp"
 
 class Core
 {
 public:
     // "Регистрирует" нового пользователя и возвращает его ID.
-    std::string RegisterNewUser(const std::string& aUserName);
+    std::string RegisterNewUser(const std::string& aUserName, std::string& status);
    
 
     // Запрос имени клиента по ID
-    std::string GetUserName(const std::string& aUserId);
+    Trader* GetTrader(const std::string& traderId);
+    std::string GetTraderBalance(const std::string& traderId, std::string& status);
+
     static Core& GetCore();
 
 private:
 
     std::string ValidateUsername(const std::string &aUserName);
 
-    // <UserId, UserName>
-    std::map<size_t, std::string> mUsers;
+    std::vector<Trader> traders;
 };
 
 #endif //CORE_HPP

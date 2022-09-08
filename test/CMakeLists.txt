@@ -4,7 +4,9 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 set(TARGET_SRC 
     maintest.cpp
+    common/Message.cpp
     server/Registration.cpp
+    server/ShowBalance.cpp
     )
 add_executable( tests ${TARGET_SRC} )
 

@@ -4,8 +4,7 @@
 
 #include <string>
 #include <vector>
-
-class Order;
+#include "Order.hpp"
 
 class Trader
 {

@@ -4,4 +4,7 @@ ADD_LIBRARY(Server
     model/Trader.cpp
     model/Order.cpp
 )
-TARGET_LINK_LIBRARIES(Server PRIVATE Threads::Threads ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(Server PRIVATE 
+                Common
+                Threads::Threads ${Boost_LIBRARIES}
+                )
