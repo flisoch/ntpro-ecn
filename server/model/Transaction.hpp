@@ -5,9 +5,9 @@
 #include "Order.hpp"
 
 class Transaction {
-    Transaction(Order& buyOrder, Order& sellOrder);
-    Order buyOrder;
-    Order sellOrder;
+    Transaction(unsigned long buyOrderId, unsigned long sellOrderId);
+    unsigned long buyOrderId;
+    unsigned long sellOrderId;
 private:
     void FillOrders();
 };

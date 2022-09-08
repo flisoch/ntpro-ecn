@@ -1,8 +1,7 @@
 #include "Order.hpp"
-#include "Trader.hpp"
 
-Order::Order(Trader &trader, Direction direction, int price, int amount, milliseconds creationTime)
-    : trader(std::make_shared<Trader>(trader)),
+Order::Order(unsigned long traderId, Direction direction, int price, int amount, milliseconds creationTime)
+    : traderId(traderId),
       direction(direction),
       price(price),
       amount(amount),

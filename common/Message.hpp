@@ -11,8 +11,8 @@ public:
     std::string statusCode;
     std::string body;
     
-    Message(std::string statusCode, std::string body);
     Message();
+    Message(std::string statusCode, std::string body);
 
     nlohmann::json toJson();
     static Message fromJson(nlohmann::json json);
