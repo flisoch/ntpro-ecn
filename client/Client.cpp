@@ -83,6 +83,10 @@ void Client::ShowMenu()
         case 1:
         {
             SendMessage(std::to_string(user.id), Requests::Balance, "");
+            Message message = ReadMessage();
+            if (message.statusCode != StatusCodes::OK) {
+                std::cout << "Error: " + message.statusCode;
+            }
             std::cout << ReadMessage().body << "\n\n";
             break;
         }

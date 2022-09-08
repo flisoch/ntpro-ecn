@@ -30,3 +30,11 @@ TEST_F(ShowBalanceTest, ChangedBalanceIsSaved) {
 
     ASSERT_EQ(balance, "USD:1, RUB:-60");
 }
+
+TEST_F(ShowBalanceTest, BalanceOfUnknownUserReturnsNoBalance) {
+
+    std::string balance = core.GetTraderBalance("123", status);
+
+    ASSERT_EQ(balance, "");
+    ASSERT_EQ(status, StatusCodes::UserNotFound);
+}
