@@ -2,40 +2,53 @@
 #include "Common.hpp"
 
 // "Регистрирует" нового пользователя и возвращает его ID.
-std::string Core::RegisterNewUser(const std::string &aUserName)
+std::string Core::RegisterNewUser(const std::string &aUserName, std::string& status)
 {   
-    std::string status = ValidateUsername(aUserName);
+    status = ValidateUsername(aUserName);
     if (status != StatusCodes::OK) {
-        return status;
+        return "";
     }
 
-    size_t newUserId = mUsers.size();
-    mUsers[newUserId] = aUserName;
-
+    size_t newUserId = traders.size();
+    traders.push_back(Trader(newUserId, aUserName));
     return std::to_string(newUserId);
 }
 
-// Запрос имени клиента по ID
-std::string Core::GetUserName(const std::string &aUserId)
+
+Trader* Core::GetTrader(const std::string &traderId)
 {
-    const auto userIt = mUsers.find(std::stoi(aUserId));
-    if (userIt == mUsers.cend())
-    {
-        return "Error! Unknown User";
+    long id = std::stol(traderId);
+    if(id >= traders.size()) {
+        return nullptr;
     }
     else
     {
-        return userIt->second;
+        return &traders[id];
     }
 }
 
-std::string Core::ValidateUsername(const std::string &aUserName) {
-    if (aUserName.empty()) {
+std::string Core::GetTraderBalance(const std::string& traderId, std::string& status) 
+{
+    Trader* trader = GetTrader(traderId);
+    std::string balanceString;
+    if (trader == nullptr) {
+        status = StatusCodes::UserNotFound;
+    }
+    else {
+        status = StatusCodes::OK;
+        balanceString = "USD:" + std::to_string(trader->balance.usd) + ", RUB:" + std::to_string(trader->balance.rub);
+    }
+
+    return balanceString;
+}
+
+std::string Core::ValidateUsername(const std::string &username) {
+    if (username.empty()) {
         return StatusCodes::EmptyUsernameForm;
     }
     
-    for (auto& it: mUsers) {
-        if (it.second == aUserName) {
+    for (const auto& trader: traders) {
+        if (trader.username == username) {
             return StatusCodes::UsernameAlreadyTaken;
         }
     }

@@ -4,6 +4,7 @@
 
 #include <boost/asio.hpp>
 #include "model/User.hpp"
+#include "Message.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -19,9 +20,9 @@ private:
         const std::string &aRequestType,
         const std::string &aMessage);
 
-    std::string ReadMessage();
+    Message ReadMessage();
     
-    void ProcessRegistration();
+    std::string ProcessRegistration();
     void ProcessRegistrationForm();
 
     void ShowMenu();

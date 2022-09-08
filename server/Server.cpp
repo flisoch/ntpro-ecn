@@ -2,11 +2,11 @@
 #include <boost/bind/bind.hpp>
 #include "json.hpp"
 #include "Common.hpp"
+#include "Message.hpp"
 #include "Server.hpp"
 #include "Core.hpp"
 
 using boost::asio::ip::tcp;
-
 
 session::session(boost::asio::io_service &io_service)
     : socket_(io_service)
@@ -37,18 +37,21 @@ void session::handle_read(const boost::system::error_code &error,
         auto j = nlohmann::json::parse(data_);
         auto reqType = j["ReqType"];
 
-        std::string reply = "Error! Unknown request type";
+        std::string reply;
+        std::string status;
+
+        
         if (reqType == Requests::Registration)
         {
             // Это реквест на регистрацию пользователя.
             // Добавляем нового пользователя и возвращаем его ID.
-            reply = Core::GetCore().RegisterNewUser(j["Message"]);
+            auto userId = Core::GetCore().RegisterNewUser(j["Message"], status);
+            reply = Message(status, userId).toJson().dump();
         }
-        else if (reqType == Requests::Hello)
-        {
-            // Это реквест на приветствие.
-            // Находим имя пользователя по ID и приветствуем его по имени.
-            reply = "Hello, " + Core::GetCore().GetUserName(j["UserId"]) + "!\n";
+        else if (reqType == Requests::Balance)
+        {   
+            auto balance = Core::GetCore().GetTraderBalance(j["UserId"], status);
+            reply = Message(status, "Your Balance is: " + balance).toJson().dump();
         }
 
         boost::asio::async_write(socket_,
@@ -76,7 +79,6 @@ void session::handle_write(const boost::system::error_code &error)
         delete this;
     }
 }
-
 
 server::server(boost::asio::io_service &io_service)
     : io_service_(io_service),

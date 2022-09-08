@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "json.hpp"
 #include "Common.hpp"
+
 #include <iostream>
 
 Client::Client(boost::asio::io_service &io_service)
@@ -17,7 +18,7 @@ Client::Client(boost::asio::io_service &io_service)
 void Client::StartUi()
 {
     std::string status = Authenticate();
-    while (status!=StatusCodes::OK)
+    while (status != StatusCodes::OK)
     {
         std::cout << status << "\n";
         status = Authenticate();
@@ -71,7 +72,7 @@ void Client::ShowMenu()
     {
         // Тут реализовано "бесконечное" меню.
         std::cout << "Menu:\n"
-                     "1) Hello Request\n"
+                     "1) Show Balance\n"
                      "2) Exit\n"
                   << std::endl;
 
@@ -81,12 +82,8 @@ void Client::ShowMenu()
         {
         case 1:
         {
-            // Для примера того, как может выглядить взаимодействие с сервером
-            // реализован один единственный метод - Hello.
-            // Этот метод получает от сервера приветствие с именем клиента,
-            // отправляя серверу id, полученный при регистрации.
-            SendMessage(std::to_string(user.id), Requests::Hello, "");
-            std::cout << ReadMessage();
+            SendMessage(std::to_string(user.id), Requests::Balance, "");
+            std::cout << ReadMessage().body << "\n\n";
             break;
         }
         case 2:
@@ -96,7 +93,7 @@ void Client::ShowMenu()
         }
         default:
         {
-            std::cout << "Unknown menu option\n"
+            std::cout << "Unknown menu option\n\n"
                       << std::endl;
         }
         }
@@ -119,24 +116,30 @@ void Client::SendMessage(
 }
 
 // Возвращает строку с ответом сервера на последний запрос.
-std::string Client::ReadMessage()
+Message Client::ReadMessage()
 {
     boost::asio::streambuf b;
     boost::asio::read_until(socket, b, "\0");
     std::istream is(&b);
     std::string line(std::istreambuf_iterator<char>(is), {});
-    return line;
+    auto json = nlohmann::json::parse(line);
+    return Message::fromJson(json);
 }
 
 // "Создаём" пользователя, получаем его ID.
-void Client::ProcessRegistration()
+std::string Client::ProcessRegistration()
 {
 
     // Для регистрации Id не нужен, заполним его нулём
     SendMessage("0", Requests::Registration, user.username);
 
-    std::string id = ReadMessage();
-    user.id = std::stoi(id);
+    Message response = ReadMessage();
+    if (response.statusCode != StatusCodes::OK)
+    {
+    }
+    user.id = std::stoi(response.body);
+
+    return StatusCodes::OK;
 }
 
 void Client::ProcessRegistrationForm()

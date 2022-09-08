@@ -18,11 +18,11 @@ namespace Requests
 
 namespace StatusCodes
 {
+    static std::string UserNotFound = "UserNotFound";
     static std::string EmptyUsernameForm = "EmptUsname";
     static std::string UsernameAlreadyTaken = "UsernameTaken";
     static std::string OK = "OK";
     static std::string AuthenticationFailed = "AuthFailed";
-
-
+    static std::string UnknownError = "UnknownError";
 }
 #endif //CLIENSERVERECN_COMMON_HPP

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-class Order;
+// class Order;
 
 class Trader
 {
@@ -23,7 +23,7 @@ public:
     unsigned long id;
     std::string username;
     Balance balance;
-    std::vector<Order> orders;
+    // std::vector<Order> orders;
 };
 
 #endif  //TRADER_HPP
