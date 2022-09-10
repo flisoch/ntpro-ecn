@@ -8,31 +8,34 @@
 class RegistrationTest : public ::testing::Test
 {
 protected:
-	Core core;
+    Core core;
     std::string status;
 };
 
-TEST_F(RegistrationTest, UsernameIdGenerated) {
+TEST_F(RegistrationTest, UsernameIdGenerated)
+{
 
     std::string id = core.RegisterNewUser("testname", status);
     ASSERT_EQ(id, "0");
 }
 
-TEST_F(RegistrationTest, EmptyUsernameNotRegistered) {
+TEST_F(RegistrationTest, EmptyUsernameNotRegistered)
+{
 
     std::string id = core.RegisterNewUser("", status);
     ASSERT_NE(id, "0");
 }
 
-TEST_F(RegistrationTest, EmptyUsernameReturnsNoIdAndStatus) {
+TEST_F(RegistrationTest, EmptyUsernameReturnsNoIdAndStatus)
+{
 
     std::string id = core.RegisterNewUser("", status);
     ASSERT_EQ(status, StatusCodes::EmptyUsernameForm);
     ASSERT_EQ(id, "");
-
 }
 
-TEST_F(RegistrationTest, AlreadyUsedUsernameReturnsNoIdAndStatus) {
+TEST_F(RegistrationTest, AlreadyUsedUsernameReturnsNoIdAndStatus)
+{
 
     core.RegisterNewUser("testname", status);
     std::string id = core.RegisterNewUser("testname", status);

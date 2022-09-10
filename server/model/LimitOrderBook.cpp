@@ -23,11 +23,6 @@ void LimitOrderBook::LimitSell(Order *order)
         buyLimits.Market(orders[order->orderId],
                          [&](size_t id)
                          { orders.erase(id); });
-        // if (orders[order->orderId]->amount == 0)
-        // {
-        //     orders.erase(order->orderId);
-        //     return;
-        // }
     }
     else
     {
@@ -42,11 +37,6 @@ void LimitOrderBook::LimitBuy(Order *order)
         sellLimits.Market(orders[order->orderId],
                           [&](size_t id)
                           { orders.erase(id); });
-
-        // if (orders[order->orderId]->amount == 0)
-        // {
-        //     orders.erase(order->orderId);
-        // }
     }
     else
     {

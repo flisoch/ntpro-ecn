@@ -16,7 +16,7 @@ public:
 
     void Market(Order *order, std::function<void(size_t)> onFill); // try to fill order
     // double volume = 0;                                             // total amount of usd for this tree
-    std::map<double, Limit *> limits;                              // price to limits map
+    std::map<double, Limit *> limits; // price to limits map
 
 private:
     bool Matched(double limit, double market, Order::Direction direction);

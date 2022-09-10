@@ -20,7 +20,6 @@ void LimitTree::NewLimit(Order *order)
         order->limit = limit;
         order->limit->volume += order->amount;
     }
-    // volume += order->amount;
 }
 
 void LimitTree::Market(Order *order, std::function<void(size_t)> onFill)
@@ -39,9 +38,7 @@ void LimitTree::Market(Order *order, std::function<void(size_t)> onFill)
             {
                 matchedOrder->amount -= order->amount;
                 matchedOrder->limit->volume -= order->amount;
-                // volume -= order->amount;
             }
-            // order->amount = 0;
             onFill(order->orderId);
             return;
         }
@@ -53,14 +50,15 @@ void LimitTree::Market(Order *order, std::function<void(size_t)> onFill)
 void LimitTree::Finish(Order *order)
 {
     auto limit = order->limit;
-    if (limit->orders.size() == 1) {
+    if (limit->orders.size() == 1)
+    {
         limits.erase(limit->price);
     }
-    else {
+    else
+    {
         limit->volume -= order->amount;
         limit->orders.pop_back();
     }
-    // volume -= order->amount;
 }
 
 bool LimitTree::Matched(double limit, double market, Order::Direction direction)

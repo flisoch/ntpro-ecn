@@ -17,11 +17,10 @@ protected:
 };
 
 TEST_F(OrderDaoTest, NewOrderIdGenerated)
-{   
+{
     size_t traderId = 0;
 
     Order order = Order(traderId, Order::Direction::BUY, 60, 1);
     size_t id = dao->AddOrder(order);
     ASSERT_EQ(id, 0);
 }
-

@@ -40,7 +40,6 @@ void session::handle_read(const boost::system::error_code &error,
         std::string reply;
         std::string status;
 
-        
         if (reqType == Requests::Registration)
         {
             // Это реквест на регистрацию пользователя.
@@ -49,7 +48,7 @@ void session::handle_read(const boost::system::error_code &error,
             reply = Message(status, userId).toJson().dump();
         }
         else if (reqType == Requests::Balance)
-        {   
+        {
             auto balance = Core::GetCore().GetTraderBalance(j["UserId"], status);
             reply = Message(status, "Your Balance is: " + balance).toJson().dump();
         }
