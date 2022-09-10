@@ -32,7 +32,6 @@ TEST_F(RegistrationTest, EmptyUsernameReturnsNoIdAndStatus) {
 
 }
 
-
 TEST_F(RegistrationTest, AlreadyUsedUsernameReturnsNoIdAndStatus) {
 
     core.RegisterNewUser("testname", status);

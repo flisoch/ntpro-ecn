@@ -3,6 +3,9 @@ ADD_LIBRARY(Server
     Core.cpp
     model/Trader.cpp
     model/Order.cpp
+    model/LimitOrderBook.cpp
+    dao/MemoryOrderDao.cpp
+    dao/MemoryTraderDao.cpp
 )
 TARGET_LINK_LIBRARIES(Server PRIVATE 
                 Common

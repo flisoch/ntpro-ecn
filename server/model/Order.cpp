@@ -1,10 +1,10 @@
 #include "Order.hpp"
 
-Order::Order(unsigned long traderId, Direction direction, int price, int amount, milliseconds creationTime)
+Order::Order(size_t traderId, Direction direction, double price, double amount/*, milliseconds creationTime*/)
     : traderId(traderId),
       direction(direction),
       price(price),
-      amount(amount),
-      creationTime(creationTime)
+      amount(amount)/*,
+      creationTime(creationTime)*/
 {
 }

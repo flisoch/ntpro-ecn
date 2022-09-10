@@ -18,9 +18,9 @@ class User
 public:
     User() = default;
     User(std::string username);
-    User(unsigned long id, std::string username);
+    User(size_t id, std::string username);
 
-    unsigned long id;
+    size_t id;
     std::string username;
     Balance balance;
 };

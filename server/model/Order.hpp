@@ -10,20 +10,20 @@ using std::chrono::milliseconds;
 class Order
 {
 
-    enum class Direction
+public:
+    enum class Direction : bool
     {
-        BUY,
-        SELL
+        BUY = true,
+        SELL = false
     };
 
-public:
-    Order(unsigned long traderId, Direction direction, int price, int amount, milliseconds creationTime);
+    Order(size_t traderId, Direction direction, double price, double amount/*, milliseconds creationTime*/);
 
-    int amount = 0;
-    int price = 0; // in rub
+    double amount = 0; // usd
+    double price = 0;  // rub
     Direction direction;
-    unsigned long traderId;
-    milliseconds creationTime;
+    size_t traderId;
+    // milliseconds creationTime;
 };
 
-#endif //ORDER_HPP
+#endif // ORDER_HPP

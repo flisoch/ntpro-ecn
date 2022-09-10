@@ -8,21 +8,22 @@
 
 class Trader
 {
+
+public:
     class Balance
     {
     public:
         long rub = 0;
         long usd = 0;
     };
-
-public:
+    
     Trader(std::string username);
-    Trader(unsigned long id, std::string username);
+    Trader(size_t id, std::string username);
 
-    unsigned long id;
+    size_t id;
     std::string username;
     Balance balance;
     std::vector<Order> orders;
 };
 
-#endif  //TRADER_HPP
+#endif // TRADER_HPP
