@@ -1,41 +1,60 @@
 
 #include "LimitOrderBook.hpp"
 
-void LimitOrderBook::Limit(Order order)
+void LimitOrderBook::Limit(Order *order)
 {
-    order.orderId = orders.size();
-    orders.push_back(order);
+    order->orderId = orders.size();
+    orders.emplace(order->orderId, order);
 
-    if (order.direction == Order::Direction::BUY)
+    if (order->direction == Order::Direction::BUY)
     {
         LimitBuy(order);
     }
-    else if (order.direction == Order::Direction::SELL)
+    else if (order->direction == Order::Direction::SELL)
     {
         LimitSell(order);
     }
 }
 
-void LimitOrderBook::LimitSell(Order order)
+void LimitOrderBook::LimitSell(Order *order)
 {
-    if (!buyLimits.limits.empty() && order.price <= buyLimits.limits.begin()->first)
+    if (!buyLimits.limits.empty() && order->price <= buyLimits.limits.begin()->first)
     {
-        buyLimits.Market(&orders[order.orderId]);
-        if (orders[order.orderId].amount == 0) {
-            orders.erase(orders.begin() + order.orderId);
-        }
+        buyLimits.Market(orders[order->orderId],
+                         [&](size_t id)
+                         { orders.erase(id); });
+        // if (orders[order->orderId]->amount == 0)
+        // {
+        //     orders.erase(order->orderId);
+        //     return;
+        // }
     }
-    sellLimits.NewLimit(&orders[order.orderId]);
+    else
+    {
+        sellLimits.NewLimit(orders[order->orderId]);
+    }
 }
-void LimitOrderBook::LimitBuy(Order order)
+void LimitOrderBook::LimitBuy(Order *order)
 {
 
-    if (!sellLimits.limits.empty() && order.price >= sellLimits.limits.begin()->first)
+    if (!sellLimits.limits.empty() && order->price >= sellLimits.limits.begin()->first)
     {
-        sellLimits.Market(&orders[order.orderId]);
-        if (orders[order.orderId].amount == 0) {
-            orders.erase(orders.begin() + order.orderId);
-        }
+        sellLimits.Market(orders[order->orderId],
+                          [&](size_t id)
+                          { orders.erase(id); });
+
+        // if (orders[order->orderId]->amount == 0)
+        // {
+        //     orders.erase(order->orderId);
+        // }
     }
-    sellLimits.NewLimit(&orders[order.orderId]);
+    else
+    {
+        buyLimits.NewLimit(orders[order->orderId]);
+    }
+}
+
+void LimitOrderBook::EraseOrder(size_t orderId)
+{
+    orders.erase(orderId);
 }

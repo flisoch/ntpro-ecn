@@ -4,18 +4,20 @@
 
 #include <chrono>
 #include <memory>
-#include <map>
+#include <vector>
 #include "Order.hpp"
+
+class Order;
 
 class Limit
 {
 
 public:
 
-    Limit(Order order);
-    double price;
-    double volume; //total amount of usd for this price
-    std::map<double, Order> ordersTree; // sorted by price
+    Limit(Order* order);
+    double price = 0;
+    double volume = 0; //total amount of usd for this price
+    std::vector<Order*> orders; // FIFO
 };
 
 #endif // LIMIT_HPP

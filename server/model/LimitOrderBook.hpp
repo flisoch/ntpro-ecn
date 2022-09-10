@@ -8,15 +8,16 @@
 class LimitOrderBook
 {
 public:
-    void Limit(Order order);
+    void Limit(Order* order);
 
     LimitTree buyLimits;
     LimitTree sellLimits;
-    std::vector<Order> orders; // for cancellation
+    std::map<size_t, Order*> orders; // for cancellation
 
 private:
-    void LimitSell(Order order);
-    void LimitBuy(Order order);
+    void LimitSell(Order* order);
+    void LimitBuy(Order* order);
+    void EraseOrder(size_t orderId);
 };
 
 #endif // LIMIT_ORDER_BOOK_HPP

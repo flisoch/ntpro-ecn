@@ -4,8 +4,11 @@
 
 #include <chrono>
 #include <memory>
+#include "Limit.hpp"
 
 using std::chrono::milliseconds;
+
+class Limit;
 
 class Order
 {
@@ -24,6 +27,8 @@ public:
     Direction direction;
     size_t traderId;
     // milliseconds creationTime;
+    Limit* limit = nullptr;
+
 };
 
 #endif // ORDER_HPP
