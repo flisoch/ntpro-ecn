@@ -17,7 +17,6 @@ public:
 private:
     void LimitSell(Order *order);
     void LimitBuy(Order *order);
-    void EraseOrder(size_t orderId);
 };
 
 #endif // LIMIT_ORDER_BOOK_HPP

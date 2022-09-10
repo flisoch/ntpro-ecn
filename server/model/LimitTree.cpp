@@ -67,12 +67,9 @@ bool LimitTree::Matched(double limit, double market, Order::Direction direction)
     {
     case Order::Direction::SELL:
         return limit <= market;
-        break;
     case Order::Direction::BUY:
         return limit >= market;
-        break;
     default:
-        break;
+        return false;
     }
-    return false;
 }

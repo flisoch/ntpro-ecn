@@ -2,7 +2,6 @@
 #define LIMIT_TREE_HPP
 #pragma once
 
-#include <memory>
 #include <map>
 #include <functional>
 #include "Limit.hpp"
@@ -15,7 +14,6 @@ public:
     void NewLimit(Order *order); // new Limit, used if Can't fill/execute order instantly
 
     void Market(Order *order, std::function<void(size_t)> onFill); // try to fill order
-    // double volume = 0;                                             // total amount of usd for this tree
     std::map<double, Limit *> limits; // price to limits map
 
 private:
