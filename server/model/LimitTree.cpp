@@ -16,7 +16,7 @@ void LimitTree::NewLimit(Order *order)
     else
     {
         Limit *limit = limits.at(order->price);
-        limit->orders.push_back(order);
+        limit->orders.emplace(order);
         order->limit = limit;
         order->limit->volume += order->amount;
     }
@@ -57,7 +57,7 @@ void LimitTree::Finish(Order *order)
     else
     {
         limit->volume -= order->amount;
-        limit->orders.pop_back();
+        limit->orders.pop();
     }
 }
 

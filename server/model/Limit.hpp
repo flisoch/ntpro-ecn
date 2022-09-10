@@ -4,7 +4,7 @@
 
 #include <chrono>
 #include <memory>
-#include <vector>
+#include <queue>
 #include "Order.hpp"
 
 class Order;
@@ -17,7 +17,7 @@ public:
     Limit(Order* order);
     double price = 0;
     double volume = 0; //total amount of usd for this price
-    std::vector<Order*> orders; // FIFO
+    std::queue<Order*> orders; // FIFO
 };
 
 #endif // LIMIT_HPP

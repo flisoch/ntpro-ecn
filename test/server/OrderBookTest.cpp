@@ -63,3 +63,68 @@ TEST_F(OrderBookTest, OppositeOrderFillsLimit)
     ASSERT_EQ(orderBook.buyLimits.limits.empty(), 1);
     ASSERT_EQ(orderBook.sellLimits.limits.empty(), 1);
 }
+
+TEST_F(OrderBookTest, OneFillsTwo)
+{
+    Order order1 = Order(0, Order::Direction::BUY, 60, 1);
+    Order order2 = Order(1, Order::Direction::BUY, 60, 1);
+    Order order3 = Order(2, Order::Direction::SELL, 60, 2);
+    
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+    orderBook.Limit(&order3);
+
+    ASSERT_EQ(orderBook.buyLimits.limits.empty(), 1);
+    ASSERT_EQ(orderBook.sellLimits.limits.empty(), 1);
+    ASSERT_EQ(orderBook.orders.empty(), 1);
+
+}
+
+TEST_F(OrderBookTest, TwoOppositesAndOneLeftsOne)
+{
+    Order order1 = Order(0, Order::Direction::BUY, 60, 2);
+    Order order2 = Order(1, Order::Direction::BUY, 60, 1);
+    Order order3 = Order(2, Order::Direction::SELL, 60, 2);
+    
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+    orderBook.Limit(&order3);
+
+    ASSERT_EQ(orderBook.buyLimits.limits.size(), 1);
+    ASSERT_EQ(orderBook.sellLimits.limits.empty(), 1);
+    ASSERT_EQ(orderBook.orders.size(), 1);
+
+}
+
+TEST_F(OrderBookTest, LateOrderFillsPartially)
+{
+    Order order1 = Order(0, Order::Direction::BUY, 60, 1);
+    Order order2 = Order(1, Order::Direction::BUY, 60, 2);
+    Order order3 = Order(2, Order::Direction::SELL, 60, 2);
+    
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+    orderBook.Limit(&order3);
+
+    EXPECT_EQ(orderBook.buyLimits.limits.size(), 1);
+    EXPECT_EQ(orderBook.sellLimits.limits.empty(), 1);
+    EXPECT_EQ(orderBook.orders.size(), 1);
+    ASSERT_EQ(orderBook.orders.begin()->first, order2.orderId);
+
+}
+
+TEST_F(OrderBookTest, SellLimitsWithDiffPricesFilledWithOneBigBuy)
+{
+    Order order1 = Order(1, Order::Direction::SELL, 61, 1);
+    Order order2 = Order(2, Order::Direction::SELL, 60, 1);
+    Order order3 = Order(2, Order::Direction::BUY, 60, 2);
+    
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+    orderBook.Limit(&order3);
+
+    ASSERT_EQ(orderBook.buyLimits.limits.size(), 0);
+    ASSERT_EQ(orderBook.sellLimits.limits.size(), 0);
+    ASSERT_EQ(orderBook.orders.size(), 0);
+
+}
