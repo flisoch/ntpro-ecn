@@ -3,6 +3,8 @@ ADD_LIBRARY(Server
     Core.cpp
     model/Trader.cpp
     model/Order.cpp
+    model/Limit.cpp
+    model/LimitTree.cpp
     model/LimitOrderBook.cpp
     dao/MemoryOrderDao.cpp
     dao/MemoryTraderDao.cpp

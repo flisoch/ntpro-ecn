@@ -16,9 +16,9 @@ public:
         BUY = true,
         SELL = false
     };
-
+    Order() = default;
     Order(size_t traderId, Direction direction, double price, double amount/*, milliseconds creationTime*/);
-
+    size_t orderId;
     double amount = 0; // usd
     double price = 0;  // rub
     Direction direction;
