@@ -60,11 +60,18 @@ std::string Core::ValidateUsername(const std::string &username)
 
 void Core::NewOrder(OrderDTO dto, std::string &status)
 {
-    Order* order = new Order(dto.traderId, Order::Direction::BUY, dto.price, dto.amount);
+    Order::Direction direction = dto.direction == "sell" ? Order::Direction::SELL: Order::Direction::BUY;
+    Order* order = new Order(dto.traderId, direction, dto.price, dto.amount);
     orderBook.Limit(order);
     auto trader = traderDao->GetTrader(order->traderId);
-    // trader->orders.emplace(orderBook.orders.end());
-    // traders[order.traderId].orders.push_back(orderBook.orders.end());
+    
+    if (order->direction == Order::Direction::BUY) {
+        trader->balance.rub -= dto.price * dto.amount;
+    }
+    else {
+        trader->balance.usd -= dto.amount;
+    }
+    status = StatusCodes::OK;
 }
 
 Core &Core::GetCore()

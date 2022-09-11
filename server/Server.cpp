@@ -48,9 +48,13 @@ void session::handle_read(const boost::system::error_code &error,
             auto userId = Core::GetCore().RegisterNewUser(j["Message"], status);
             reply = Message(status, userId).toJson().dump();
         }
-        else if (reqType == Requests::NewOrder) {
+        else if (reqType == Requests::NewOrder)
+        {   
+            // auto m = j["Message"].dump();
+            // auto json = nlohmann::json::parse(m);
             OrderDTO order = OrderDTO::fromJson(j["Message"]);
             Core::GetCore().NewOrder(order, status);
+            reply = Message(status, "Order Created").toJson().dump();
         }
         else if (reqType == Requests::Balance)
         {

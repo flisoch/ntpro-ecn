@@ -90,13 +90,26 @@ void Client::ShowMenu()
             {
                 std::cout << "Error: " + message.statusCode;
             }
-            std::cout << ReadMessage().body << "\n\n";
+            std::cout << message.body << "\n\n";
             break;
         }
         case 2:
         {
             OrderDTO order = InputOrder();
-            SendMessage(std::to_string(user.id), Requests::NewOrder, order.toJson());
+            nlohmann::json request;
+            request["UserId"] = user.id;
+            request["Message"] = order.toJson();
+            request["ReqType"] = Requests::NewOrder;
+            std::string r = request.dump();
+            boost::asio::write(socket, boost::asio::buffer(r, r.size()));
+
+            // SendMessage(std::to_string(user.id), Requests::NewOrder, order.toJson().dump());
+            Message message = ReadMessage();
+            if (message.statusCode != StatusCodes::OK)
+            {
+                std::cout << "Error: " + message.statusCode;
+            }
+            std::cout << message.body << "\n\n";
             break;
         }
         case 3:

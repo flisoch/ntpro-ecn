@@ -5,6 +5,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 set(TARGET_SRC 
     maintest.cpp
     common/MessageTest.cpp
+    common/OrderDtoTest.cpp
     server/RegistrationTest.cpp
     server/ShowBalanceTest.cpp
     server/TraderDaoTest.cpp
