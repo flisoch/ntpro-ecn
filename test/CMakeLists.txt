@@ -10,6 +10,7 @@ set(TARGET_SRC
     server/TraderDaoTest.cpp
     server/OrderDaoTest.cpp
     server/OrderBookTest.cpp
+    server/CoreTest.cpp
     )
 add_executable( tests ${TARGET_SRC} )
 

@@ -6,7 +6,7 @@ LimitOrderBook::LimitOrderBook()
       sellLimits(LimitTree::MyCompare(true))
 {
 }
-void LimitOrderBook::Limit(Order *order)
+void LimitOrderBook::Limit(Order* order)
 {
     order->orderId = orders.size();
     orders.emplace(order->orderId, order);

@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include "model/User.hpp"
 #include "Message.hpp"
+#include "OrderDTO.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -27,6 +28,7 @@ private:
 
     void ShowMenu();
     std::string Authenticate();
+    OrderDTO InputOrder();
 
     tcp::socket socket;
     boost::asio::io_service &io_service;

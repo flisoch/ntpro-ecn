@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "json.hpp"
 #include "Common.hpp"
+#include "OrderDTO.hpp"
 
 #include <iostream>
 
@@ -73,7 +74,8 @@ void Client::ShowMenu()
         // Тут реализовано "бесконечное" меню.
         std::cout << "Menu:\n"
                      "1) Show Balance\n"
-                     "2) Exit\n"
+                     "2) Create Order\n"
+                     "3) Exit\n"
                   << std::endl;
 
         short menu_option_num;
@@ -84,13 +86,20 @@ void Client::ShowMenu()
         {
             SendMessage(std::to_string(user.id), Requests::Balance, "");
             Message message = ReadMessage();
-            if (message.statusCode != StatusCodes::OK) {
+            if (message.statusCode != StatusCodes::OK)
+            {
                 std::cout << "Error: " + message.statusCode;
             }
             std::cout << ReadMessage().body << "\n\n";
             break;
         }
         case 2:
+        {
+            OrderDTO order = InputOrder();
+            SendMessage(std::to_string(user.id), Requests::NewOrder, order.toJson());
+            break;
+        }
+        case 3:
         {
             exit(0);
             break;
@@ -153,4 +162,17 @@ void Client::ProcessRegistrationForm()
     std::cin >> username;
     user.id = -1;
     user.username = username;
+}
+
+OrderDTO Client::InputOrder()
+{   
+    std::cout << "Enter direction, price and amount. Example: \n"
+                         "sell 60 1\n"
+                         "buy 61 2\n";
+
+    std::string direction;
+    double price;
+    double amount;
+    std::cin >> direction >> price >> amount;
+    return OrderDTO(user.id, direction, price, amount);
 }

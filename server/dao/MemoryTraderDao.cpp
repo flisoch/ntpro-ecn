@@ -19,6 +19,18 @@ Trader *MemoryTraderDao::GetTrader(size_t traderId)
     }
 }
 
+Trader *MemoryTraderDao::GetTraderByUsername(std::string username)
+{
+    for (auto &trader : traders)
+    {
+        if (trader.username == username)
+        {
+            return &trader;
+        }
+    }
+    return nullptr;
+}
+
 Trader::Balance *MemoryTraderDao::GetTraderBalance(size_t traderId)
 {
     Trader *trader = GetTrader(traderId);
@@ -38,4 +50,9 @@ Trader::Balance *MemoryTraderDao::UpdateBalance(size_t traderId, int usd, int ru
     trader->balance.rub = rub;
     trader->balance.usd = usd;
     return &trader->balance;
+}
+
+size_t MemoryTraderDao::Size() const
+{
+    return traders.size();
 }

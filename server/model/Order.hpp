@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Limit.hpp"
+#include "OrderDTO.hpp"
 
 class Limit;
 
@@ -18,6 +19,7 @@ public:
 
     Order() = default;
     Order(size_t traderId, Direction direction, double price, double amount);
+    static Order fromDTO(OrderDTO order);
     size_t orderId;
     double amount = 0; // usd
     double price = 0;  // rub

@@ -5,6 +5,7 @@
 #include "Message.hpp"
 #include "Server.hpp"
 #include "Core.hpp"
+#include "OrderDTO.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -46,6 +47,10 @@ void session::handle_read(const boost::system::error_code &error,
             // Добавляем нового пользователя и возвращаем его ID.
             auto userId = Core::GetCore().RegisterNewUser(j["Message"], status);
             reply = Message(status, userId).toJson().dump();
+        }
+        else if (reqType == Requests::NewOrder) {
+            OrderDTO order = OrderDTO::fromJson(j["Message"]);
+            Core::GetCore().NewOrder(order, status);
         }
         else if (reqType == Requests::Balance)
         {

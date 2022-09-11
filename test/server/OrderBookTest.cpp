@@ -2,6 +2,7 @@
 
 #include "gtest/gtest.h"
 #include "LimitOrderBook.hpp"
+#include <memory>
 
 class OrderBookTest : public ::testing::Test
 {
@@ -90,6 +91,7 @@ TEST_F(OrderBookTest, TwoOppositesAndOneLeftsOne)
     ASSERT_EQ(orderBook.buyLimits.limits.size(), 1);
     ASSERT_EQ(orderBook.sellLimits.limits.empty(), 1);
     ASSERT_EQ(orderBook.orders.size(), 1);
+
 }
 
 TEST_F(OrderBookTest, LateOrderFillsPartially)
