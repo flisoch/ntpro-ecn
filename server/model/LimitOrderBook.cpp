@@ -1,6 +1,11 @@
 
 #include "LimitOrderBook.hpp"
 
+LimitOrderBook::LimitOrderBook()
+    : buyLimits(LimitTree::MyCompare(false)),
+      sellLimits(LimitTree::MyCompare(true))
+{
+}
 void LimitOrderBook::Limit(Order *order)
 {
     order->orderId = orders.size();

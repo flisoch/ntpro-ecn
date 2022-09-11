@@ -8,6 +8,7 @@
 class LimitOrderBook
 {
 public:
+    LimitOrderBook();
     void Limit(Order *order);
 
     LimitTree buyLimits;

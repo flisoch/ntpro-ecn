@@ -10,10 +10,10 @@ class Order
 {
 
 public:
-    enum class Direction : bool
+    enum class Direction
     {
-        BUY = true,
-        SELL = false
+        BUY,
+        SELL
     };
 
     Order() = default;
@@ -23,7 +23,7 @@ public:
     double price = 0;  // rub
     Direction direction;
     size_t traderId;
-    Limit* limit = nullptr;
+    Limit *limit = nullptr;
 };
 
 #endif // ORDER_HPP

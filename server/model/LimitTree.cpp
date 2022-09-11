@@ -1,7 +1,8 @@
 
 #include "LimitTree.hpp"
 
-LimitTree::LimitTree()
+LimitTree::LimitTree(MyCompare comparator) :
+    limits(comparator)
 {
 }
 
@@ -24,7 +25,8 @@ void LimitTree::NewLimit(Order *order)
 
 void LimitTree::Market(Order *order, std::function<void(size_t)> onFill)
 {
-    while (Matched(limits.begin()->first, order->price, order->direction))
+
+    while (Matched(order->price, limits.begin()->first, order->direction))
     {
         Order *matchedOrder = limits.begin()->second->orders.front();
         if (matchedOrder->amount >= order->amount)
