@@ -30,7 +30,7 @@ public:
     LimitTree(MyCompare comparator);
     void NewLimit(Order *order); // new Limit, used if Can't fill/execute order instantly
 
-    void Market(Order *order, std::function<void(size_t)> onFill); // try to fill order
+    void Market(Order *order, std::function<void(size_t, size_t)> onFill); // try to fill order
     std::map<double, Limit *, MyCompare> limits;                   // price to limits map
 
 private:

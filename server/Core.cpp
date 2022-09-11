@@ -5,7 +5,8 @@
 
 Core::Core()
 {
-    traderDao = std::make_unique<MemoryTraderDao>();
+    traderDao = std::make_shared<MemoryTraderDao>();
+    orderBook.traderDao = traderDao;
 }
 // "Регистрирует" нового пользователя и возвращает его ID.
 std::string Core::RegisterNewUser(const std::string &aUserName, std::string &status)
@@ -63,14 +64,6 @@ void Core::NewOrder(OrderDTO dto, std::string &status)
     Order::Direction direction = dto.direction == "sell" ? Order::Direction::SELL: Order::Direction::BUY;
     Order* order = new Order(dto.traderId, direction, dto.price, dto.amount);
     orderBook.Limit(order);
-    auto trader = traderDao->GetTrader(order->traderId);
-    
-    if (order->direction == Order::Direction::BUY) {
-        trader->balance.rub -= dto.price * dto.amount;
-    }
-    else {
-        trader->balance.usd -= dto.amount;
-    }
     status = StatusCodes::OK;
 }
 

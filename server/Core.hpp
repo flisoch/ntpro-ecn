@@ -28,7 +28,7 @@ public:
 private:
     std::string ValidateUsername(const std::string &aUserName);
     LimitOrderBook orderBook;
-    std::unique_ptr<TraderDao> traderDao;
+    std::shared_ptr<TraderDao> traderDao;
 };
 
 #endif // CORE_HPP
