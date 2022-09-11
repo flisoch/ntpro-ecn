@@ -23,7 +23,6 @@ public:
     size_t id;
     std::string username;
     Balance balance;
-    // std::map<size_t, Order *> orders;
 };
 
 #endif // TRADER_HPP

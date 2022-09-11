@@ -157,33 +157,6 @@ TEST_F(OrderBookTest, BuyLimitsInDescendingOrder)
     ASSERT_EQ(firstIsGreater, 1);
 }
 
-TEST_F(OrderBookTest, BalanceUpdatedCorrectly)
-{
-    size_t id1 = traderDao->CreateTrader("test1");
-    size_t id2 = traderDao->CreateTrader("test2");
-    size_t id3 = traderDao->CreateTrader("test3");
-    auto trader1 = traderDao->GetTrader(id1);
-    auto trader2 = traderDao->GetTrader(id2);
-    auto trader3 = traderDao->GetTrader(id3);
-
-
-    Order order1 = Order(id1, Order::Direction::BUY, 62, 10);
-    Order order2 = Order(id2, Order::Direction::BUY, 63, 20);
-    Order order3 = Order(id3, Order::Direction::SELL, 61, 50);
-
-    orderBook.Limit(&order1);
-    orderBook.Limit(&order2);
-    orderBook.Limit(&order3);
-
-    ASSERT_EQ(orderBook.orders.size(), 1);
-    ASSERT_EQ(orderBook.orders.begin()->second->amount, 20);
-    ASSERT_EQ(trader1->balance.rub, -620);
-    ASSERT_EQ(trader1->balance.usd, 10);
-    ASSERT_EQ(trader2->balance.rub, -1260);
-    ASSERT_EQ(trader2->balance.usd, 20);
-    ASSERT_EQ(trader3->balance.rub, 1880);
-    ASSERT_EQ(trader3->balance.usd, -50);
-}
 
 TEST_F(OrderBookTest, NotFilledOrderCanBeFilledLater)
 {

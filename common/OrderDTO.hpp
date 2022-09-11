@@ -9,7 +9,6 @@ class OrderDTO
 {
 
 public:
-    OrderDTO() = default;
     OrderDTO(size_t traderId, std::string direction, double price, double amount);
 
     nlohmann::json toJson();

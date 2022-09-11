@@ -19,10 +19,6 @@ TEST(OrderDtoTest, ToJsonSuccess) {
 
 TEST(OrderDtoTest, FromJsonSuccess) {
 
-    // std::string test = "{\"Amount\":1.0,\"Direction\":\"sell\",\"Price\":60.0,\"TraderId\":0}";
-    // OrderDTO order(0, "sell", 60, 1);
-    // nlohmann::json json = order.toJson();
-    // auto t = nlohmann::json::parse(test);
     
     OrderDTO clientOrder = OrderDTO(0, "sell", 60, 1);
     nlohmann::json request;
@@ -32,10 +28,9 @@ TEST(OrderDtoTest, FromJsonSuccess) {
     std::string r = request.dump();
 
     auto j = nlohmann::json::parse(r);
-    OrderDTO ServerOrder = OrderDTO::fromJson(j["Message"]);
+    OrderDTO serverOrder = OrderDTO::fromJson(j["Message"]);
 
-    // OrderDTO order1 = OrderDTO::fromJson(test);
-    // ASSERT_EQ(order1.traderId, order.traderId);
+    ASSERT_EQ(clientOrder.traderId, serverOrder.traderId);
 }
 
 

@@ -21,7 +21,6 @@ public:
 private:
     void LimitSell(Order *order);
     void LimitBuy(Order *order);
-    // void OnFill(size_t orderId);
     size_t serialId = 0;
 
 };

@@ -105,8 +105,3 @@ void LimitOrderBook::LimitBuy(Order *order)
         buyLimits.NewLimit(orders[order->orderId]);
     }
 }
-
-// void LimitOrderBook::OnFill(size_t orderId)
-// {
-//     orders.erase(orderId);
-// }

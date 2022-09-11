@@ -50,8 +50,6 @@ void session::handle_read(const boost::system::error_code &error,
         }
         else if (reqType == Requests::NewOrder)
         {   
-            // auto m = j["Message"].dump();
-            // auto json = nlohmann::json::parse(m);
             OrderDTO order = OrderDTO::fromJson(j["Message"]);
             Core::GetCore().NewOrder(order, status);
             reply = Message(status, "Order Created").toJson().dump();

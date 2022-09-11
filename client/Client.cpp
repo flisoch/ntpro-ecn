@@ -85,12 +85,6 @@ void Client::ShowMenu()
         case 1:
         {
             SendMessage(std::to_string(user.id), Requests::Balance, "");
-            Message message = ReadMessage();
-            if (message.statusCode != StatusCodes::OK)
-            {
-                std::cout << "Error: " + message.statusCode;
-            }
-            std::cout << message.body << "\n\n";
             break;
         }
         case 2:
@@ -102,14 +96,6 @@ void Client::ShowMenu()
             request["ReqType"] = Requests::NewOrder;
             std::string r = request.dump();
             boost::asio::write(socket, boost::asio::buffer(r, r.size()));
-
-            // SendMessage(std::to_string(user.id), Requests::NewOrder, order.toJson().dump());
-            Message message = ReadMessage();
-            if (message.statusCode != StatusCodes::OK)
-            {
-                std::cout << "Error: " + message.statusCode;
-            }
-            std::cout << message.body << "\n\n";
             break;
         }
         case 3:
@@ -123,6 +109,12 @@ void Client::ShowMenu()
                       << std::endl;
         }
         }
+        Message message = ReadMessage();
+        if (message.statusCode != StatusCodes::OK)
+        {
+            std::cout << "Error: " + message.statusCode;
+        }
+        std::cout << message.body << "\n\n";
     }
 }
 
@@ -178,10 +170,10 @@ void Client::ProcessRegistrationForm()
 }
 
 OrderDTO Client::InputOrder()
-{   
+{
     std::cout << "Enter direction, price and amount. Example: \n"
-                         "sell 60 1\n"
-                         "buy 61 2\n";
+                 "sell 60 10\n"
+                 "buy 61 20\n\n";
 
     std::string direction;
     double price;

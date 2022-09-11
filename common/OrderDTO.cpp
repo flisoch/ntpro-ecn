@@ -20,7 +20,6 @@ nlohmann::json OrderDTO::toJson()
 
 OrderDTO OrderDTO::fromJson(nlohmann::json json)
 {   
-    // std::string traderId = json["TraderId"];
     return OrderDTO(
         json["TraderId"],
         json["Direction"],
