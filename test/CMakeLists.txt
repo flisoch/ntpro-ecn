@@ -9,7 +9,6 @@ set(TARGET_SRC
     server/RegistrationTest.cpp
     server/ShowBalanceTest.cpp
     server/TraderDaoTest.cpp
-    server/OrderDaoTest.cpp
     server/OrderBookTest.cpp
     server/CoreTest.cpp
     )
