@@ -20,6 +20,7 @@ public:
     // Запрос имени клиента по ID
     Trader *GetTrader(size_t traderId);
     std::string GetTraderBalance(size_t traderId, std::string &status);
+    std::vector<Order*> GetTraderOrders(size_t traderId, std::string &status);
     void NewOrder(OrderDTO order, std::string &status);
     static Core &GetCore();
     std::string SizetToString(size_t num);
