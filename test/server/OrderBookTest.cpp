@@ -179,3 +179,42 @@ TEST_F(OrderBookTest, NotFilledOrderCanBeFilledLater)
     ASSERT_EQ(trader2->balance.rub, 1200);
     ASSERT_EQ(trader2->balance.usd, -20);
 }
+
+
+TEST_F(OrderBookTest, FillSellOrderWithLowerPossiblePrice)
+{
+    size_t id1 = traderDao->CreateTrader("test1");
+    size_t id2 = traderDao->CreateTrader("test2");
+    auto trader1 = traderDao->GetTrader(id1);
+    auto trader2 = traderDao->GetTrader(id2);
+
+    Order order1 = Order(id1, Order::Direction::SELL, 60, 10);
+    Order order2 = Order(id2, Order::Direction::BUY, 69, 10);
+
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+
+    ASSERT_EQ(trader1->balance.rub, 600);
+    ASSERT_EQ(trader1->balance.usd, -10);
+    ASSERT_EQ(trader2->balance.rub, -600);
+    ASSERT_EQ(trader2->balance.usd, 10);
+}
+
+TEST_F(OrderBookTest, FillOrderWithLowerPossiblePrice)
+{
+    size_t id1 = traderDao->CreateTrader("test1");
+    size_t id2 = traderDao->CreateTrader("test2");
+    auto trader1 = traderDao->GetTrader(id1);
+    auto trader2 = traderDao->GetTrader(id2);
+
+    Order order1 = Order(id1, Order::Direction::BUY, 69, 10);
+    Order order2 = Order(id2, Order::Direction::SELL, 60, 10);
+
+    orderBook.Limit(&order1);
+    orderBook.Limit(&order2);
+
+    ASSERT_EQ(trader1->balance.rub, -690);
+    ASSERT_EQ(trader1->balance.usd, 10);
+    ASSERT_EQ(trader2->balance.rub, 690);
+    ASSERT_EQ(trader2->balance.usd, -10);
+}

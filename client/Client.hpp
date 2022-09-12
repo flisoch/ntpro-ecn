@@ -17,9 +17,9 @@ public:
 
 private:
     void SendMessage(
-        const std::string &aId,
+        size_t aId,
         const std::string &aRequestType,
-        const std::string &aMessage);
+        const nlohmann::json &aMessage);
 
     Message ReadMessage();
     

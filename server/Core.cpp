@@ -9,24 +9,24 @@ Core::Core()
     orderBook.traderDao = traderDao;
 }
 // "Регистрирует" нового пользователя и возвращает его ID.
-std::string Core::RegisterNewUser(const std::string &aUserName, std::string &status)
+size_t Core::RegisterNewUser(const std::string &aUserName, std::string &status)
 {
     status = ValidateUsername(aUserName);
     if (status != StatusCodes::OK)
     {
-        return "";
+        return -1;
     }
 
     size_t id = traderDao->CreateTrader(aUserName);
-    return std::to_string(id);
+    return id;
 }
 
-Trader *Core::GetTrader(const std::string &traderId)
+Trader *Core::GetTrader(size_t traderId)
 {
-    return traderDao->GetTrader(StringToSizet(traderId));
+    return traderDao->GetTrader(traderId);
 }
 
-std::string Core::GetTraderBalance(const std::string &traderId, std::string &status)
+std::string Core::GetTraderBalance(size_t traderId, std::string &status)
 {
     Trader *trader = GetTrader(traderId);
     std::string balanceString;

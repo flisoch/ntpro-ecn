@@ -84,18 +84,13 @@ void Client::ShowMenu()
         {
         case 1:
         {
-            SendMessage(std::to_string(user.id), Requests::Balance, "");
+            SendMessage(user.id, Requests::Balance, nlohmann::json({}));
             break;
         }
         case 2:
         {
             OrderDTO order = InputOrder();
-            nlohmann::json request;
-            request["UserId"] = user.id;
-            request["Message"] = order.toJson();
-            request["ReqType"] = Requests::NewOrder;
-            std::string r = request.dump();
-            boost::asio::write(socket, boost::asio::buffer(r, r.size()));
+            SendMessage(user.id, Requests::NewOrder, order.toJson());
             break;
         }
         case 3:
@@ -120,9 +115,9 @@ void Client::ShowMenu()
 
 // Отправка сообщения на сервер по шаблону.
 void Client::SendMessage(
-    const std::string &aId,
+    size_t aId,
     const std::string &aRequestType,
-    const std::string &aMessage)
+    const nlohmann::json &aMessage)
 {
     nlohmann::json req;
     req["UserId"] = aId;
@@ -149,7 +144,7 @@ std::string Client::ProcessRegistration()
 {
 
     // Для регистрации Id не нужен, заполним его нулём
-    SendMessage("0", Requests::Registration, user.username);
+    SendMessage(0, Requests::Registration, user.toJson());
 
     Message response = ReadMessage();
     if (response.statusCode != StatusCodes::OK)

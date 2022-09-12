@@ -45,8 +45,8 @@ void session::handle_read(const boost::system::error_code &error,
         {
             // Это реквест на регистрацию пользователя.
             // Добавляем нового пользователя и возвращаем его ID.
-            auto userId = Core::GetCore().RegisterNewUser(j["Message"], status);
-            reply = Message(status, userId).toJson().dump();
+            auto userId = Core::GetCore().RegisterNewUser(j["Message"]["Username"], status);
+            reply = Message(status, std::to_string(userId)).toJson().dump();
         }
         else if (reqType == Requests::NewOrder)
         {   

@@ -15,11 +15,11 @@ class Core
 public:
     Core();
     // "Регистрирует" нового пользователя и возвращает его ID.
-    std::string RegisterNewUser(const std::string &aUserName, std::string &status);
+    size_t RegisterNewUser(const std::string &aUserName, std::string &status);
 
     // Запрос имени клиента по ID
-    Trader *GetTrader(const std::string &traderId);
-    std::string GetTraderBalance(const std::string &traderId, std::string &status);
+    Trader *GetTrader(size_t traderId);
+    std::string GetTraderBalance(size_t traderId, std::string &status);
     void NewOrder(OrderDTO order, std::string &status);
     static Core &GetCore();
     std::string SizetToString(size_t num);

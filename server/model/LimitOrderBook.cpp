@@ -53,6 +53,7 @@ void LimitOrderBook::LimitSell(Order *order)
                                  {
                                      marketTrader->balance.rub += marketOrder->amount * marketOrder->price;
                                      newTrader->balance.usd += marketOrder->amount;
+                                     newTrader->balance.rub += (newOrder->price - marketOrder->price) * marketOrder->amount;
                                  }
                              }
                              orders.erase(marketOrderId);
@@ -91,6 +92,7 @@ void LimitOrderBook::LimitBuy(Order *order)
                                   {
                                       marketTrader->balance.rub += marketOrder->amount * marketOrder->price;
                                       newTrader->balance.usd += marketOrder->amount;
+                                      newTrader->balance.rub += (newOrder->price - marketOrder->price) * marketOrder->amount;
                                   }
                               }
                               orders.erase(marketOrderId);

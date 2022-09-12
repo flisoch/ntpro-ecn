@@ -14,14 +14,14 @@ protected:
 
 TEST_F(ShowBalanceTest, NewUserBalanceIsZero) {
 
-    std::string id = core.RegisterNewUser("testuser", status);
+    size_t id = core.RegisterNewUser("testuser", status);
     std::string balance = core.GetTraderBalance(id, status);
     ASSERT_EQ(balance, "USD:0, RUB:0");
 }
 
 TEST_F(ShowBalanceTest, ChangedBalanceIsSaved) {
 
-    std::string id = core.RegisterNewUser("testuser", status);
+    size_t id = core.RegisterNewUser("testuser", status);
     Trader* trader = core.GetTrader(id);
     trader->balance.rub = -60;
     trader->balance.usd = 1;
@@ -33,7 +33,7 @@ TEST_F(ShowBalanceTest, ChangedBalanceIsSaved) {
 
 TEST_F(ShowBalanceTest, BalanceOfUnknownUserReturnsNoBalance) {
 
-    std::string balance = core.GetTraderBalance("123", status);
+    std::string balance = core.GetTraderBalance(1, status);
 
     ASSERT_EQ(balance, "");
     ASSERT_EQ(status, StatusCodes::UserNotFound);

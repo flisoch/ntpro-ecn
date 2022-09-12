@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include "json.hpp"
 
 
 class User
@@ -19,6 +20,7 @@ public:
     User() = default;
     User(std::string username);
     User(size_t id, std::string username);
+    nlohmann::json toJson();
 
     size_t id;
     std::string username;
