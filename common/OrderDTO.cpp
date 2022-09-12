@@ -34,13 +34,11 @@ OrderDTO OrderDTO::fromOrder(Order order)
 
 std::string OrderDTO::toString()
 {
-    std::string order = "TraderId: " + std::to_string(traderId) + "\n"
-                                                                  "Direction: " +
-                        direction + "\n"
-                                    "Price " +
-                        std::to_string(price) + "\n"
-                                                "Amount " +
-                        std::to_string(amount) + "\n";
+    std::string order =
+        "TraderId: " + std::to_string(traderId) + "\n" +
+        "Direction: " + direction + "\n" +
+        "Price " + std::to_string(price) + "\n" +
+        "Amount " + std::to_string(amount) + "\n";
 
     return order;
 }
