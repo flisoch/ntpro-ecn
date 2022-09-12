@@ -16,7 +16,6 @@ add_executable( tests ${TARGET_SRC} )
 
 target_link_libraries(tests PRIVATE
                         gtest 
-                        gmock
                         gtest_main 
                         Server
                         Client

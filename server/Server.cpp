@@ -59,6 +59,15 @@ void session::handle_read(const boost::system::error_code &error,
             auto balance = Core::GetCore().GetTraderBalance(j["UserId"], status);
             reply = Message(status, "Your Balance is: " + balance).toJson().dump();
         }
+        else if (reqType == Requests::ActiveOrders)
+        {
+            std::vector<Order*> orders = Core::GetCore().GetTraderOrders(j["UserId"], status);
+            std::string ordersStr;
+            for (auto order: orders) {
+                ordersStr += OrderDTO::fromOrder(*order).toString() + "\n";
+            }
+            reply = Message(status, "Your Orders: \n " + ordersStr).toJson().dump();
+        }
 
         boost::asio::async_write(socket_,
                                  boost::asio::buffer(reply, reply.size()),

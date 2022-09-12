@@ -6,6 +6,7 @@
 #include "OrderDTO.hpp"
 
 class Limit;
+class OrderDTO;
 
 class Order
 {

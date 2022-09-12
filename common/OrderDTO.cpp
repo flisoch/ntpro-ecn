@@ -19,10 +19,28 @@ nlohmann::json OrderDTO::toJson()
 }
 
 OrderDTO OrderDTO::fromJson(nlohmann::json json)
-{   
+{
     return OrderDTO(
         json["TraderId"],
         json["Direction"],
         json["Price"],
         json["Amount"]);
+}
+OrderDTO OrderDTO::fromOrder(Order order)
+{
+    std::string direction = order.direction == Order::Direction::SELL ? "sell" : "buy";
+    return OrderDTO(order.traderId, direction, order.price, order.amount);
+}
+
+std::string OrderDTO::toString()
+{
+    std::string order = "TraderId: " + std::to_string(traderId) + "\n"
+                                                                  "Direction: " +
+                        direction + "\n"
+                                    "Price " +
+                        std::to_string(price) + "\n"
+                                                "Amount " +
+                        std::to_string(amount) + "\n";
+
+    return order;
 }

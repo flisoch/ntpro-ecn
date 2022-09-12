@@ -61,8 +61,8 @@ std::string Core::ValidateUsername(const std::string &username)
 
 void Core::NewOrder(OrderDTO dto, std::string &status)
 {
-    Order::Direction direction = dto.direction == "sell" ? Order::Direction::SELL: Order::Direction::BUY;
-    Order* order = new Order(dto.traderId, direction, dto.price, dto.amount);
+    Order::Direction direction = dto.direction == "sell" ? Order::Direction::SELL : Order::Direction::BUY;
+    Order *order = new Order(dto.traderId, direction, dto.price, dto.amount);
     orderBook.Limit(order);
     status = StatusCodes::OK;
 }
@@ -86,4 +86,17 @@ size_t Core::StringToSizet(std::string str)
     size_t result;
     sstream >> result;
     return result;
+}
+
+std::vector<Order *> Core::GetTraderOrders(size_t traderId, std::string &status)
+{
+    status = StatusCodes::OK;
+    auto orders = std::vector<Order *>();
+    for (const auto &p : orderBook.orders)
+    {
+        if (p.second->traderId == traderId) {
+            orders.push_back(p.second);
+        }
+    }
+    return orders;
 }

@@ -50,7 +50,7 @@ std::string Client::Authenticate()
     }
     case 2:
     {
-        std::cout << "Not supported yet\n";
+        std::cout << "Not supported yet\n\n";
         break;
     }
     case 3:
@@ -74,8 +74,9 @@ void Client::ShowMenu()
         // Тут реализовано "бесконечное" меню.
         std::cout << "Menu:\n"
                      "1) Show Balance\n"
-                     "2) Create Order\n"
-                     "3) Exit\n"
+                     "2) Show Active Orders\n"
+                     "3) Create Order\n"
+                     "4) Exit\n"
                   << std::endl;
 
         short menu_option_num;
@@ -89,11 +90,16 @@ void Client::ShowMenu()
         }
         case 2:
         {
+            SendMessage(user.id, Requests::ActiveOrders, nlohmann::json({}));
+            break;
+        }
+        case 3:
+        {
             OrderDTO order = InputOrder();
             SendMessage(user.id, Requests::NewOrder, order.toJson());
             break;
         }
-        case 3:
+        case 4:
         {
             exit(0);
             break;

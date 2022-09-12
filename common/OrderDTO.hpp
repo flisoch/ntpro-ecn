@@ -4,7 +4,9 @@
 
 #include <string>
 #include "json.hpp"
+#include "Order.hpp"
 
+class Order;
 class OrderDTO
 {
 
@@ -13,6 +15,8 @@ public:
 
     nlohmann::json toJson();
     static OrderDTO fromJson(nlohmann::json json);
+    static OrderDTO fromOrder(Order order);
+    std::string toString();
 
     double amount = 0; // usd
     double price = 0;  // rub
