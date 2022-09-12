@@ -10,6 +10,8 @@ SET (PATH_INCLUDE
     "${PROJECT_SOURCE_DIR}/common"
     "${PROJECT_SOURCE_DIR}/client"
     "${PROJECT_SOURCE_DIR}/server"
+    "${PROJECT_SOURCE_DIR}/server/dao"
+    "${PROJECT_SOURCE_DIR}/server/model"
 )
 INCLUDE_DIRECTORIES(${PATH_INCLUDE})
 

@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "json.hpp"
 #include "Common.hpp"
+#include "OrderDTO.hpp"
 
 #include <iostream>
 
@@ -73,7 +74,8 @@ void Client::ShowMenu()
         // Тут реализовано "бесконечное" меню.
         std::cout << "Menu:\n"
                      "1) Show Balance\n"
-                     "2) Exit\n"
+                     "2) Create Order\n"
+                     "3) Exit\n"
                   << std::endl;
 
         short menu_option_num;
@@ -82,15 +84,16 @@ void Client::ShowMenu()
         {
         case 1:
         {
-            SendMessage(std::to_string(user.id), Requests::Balance, "");
-            Message message = ReadMessage();
-            if (message.statusCode != StatusCodes::OK) {
-                std::cout << "Error: " + message.statusCode;
-            }
-            std::cout << ReadMessage().body << "\n\n";
+            SendMessage(user.id, Requests::Balance, nlohmann::json({}));
             break;
         }
         case 2:
+        {
+            OrderDTO order = InputOrder();
+            SendMessage(user.id, Requests::NewOrder, order.toJson());
+            break;
+        }
+        case 3:
         {
             exit(0);
             break;
@@ -101,14 +104,20 @@ void Client::ShowMenu()
                       << std::endl;
         }
         }
+        Message message = ReadMessage();
+        if (message.statusCode != StatusCodes::OK)
+        {
+            std::cout << "Error: " + message.statusCode;
+        }
+        std::cout << message.body << "\n\n";
     }
 }
 
 // Отправка сообщения на сервер по шаблону.
 void Client::SendMessage(
-    const std::string &aId,
+    size_t aId,
     const std::string &aRequestType,
-    const std::string &aMessage)
+    const nlohmann::json &aMessage)
 {
     nlohmann::json req;
     req["UserId"] = aId;
@@ -135,7 +144,7 @@ std::string Client::ProcessRegistration()
 {
 
     // Для регистрации Id не нужен, заполним его нулём
-    SendMessage("0", Requests::Registration, user.username);
+    SendMessage(0, Requests::Registration, user.toJson());
 
     Message response = ReadMessage();
     if (response.statusCode != StatusCodes::OK)
@@ -153,4 +162,17 @@ void Client::ProcessRegistrationForm()
     std::cin >> username;
     user.id = -1;
     user.username = username;
+}
+
+OrderDTO Client::InputOrder()
+{
+    std::cout << "Enter direction, price and amount. Example: \n"
+                 "sell 60 10\n"
+                 "buy 61 20\n\n";
+
+    std::string direction;
+    double price;
+    double amount;
+    std::cin >> direction >> price >> amount;
+    return OrderDTO(user.id, direction, price, amount);
 }

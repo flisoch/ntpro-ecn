@@ -5,6 +5,7 @@
 #include "Message.hpp"
 #include "Server.hpp"
 #include "Core.hpp"
+#include "OrderDTO.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -40,16 +41,21 @@ void session::handle_read(const boost::system::error_code &error,
         std::string reply;
         std::string status;
 
-        
         if (reqType == Requests::Registration)
         {
             // Это реквест на регистрацию пользователя.
             // Добавляем нового пользователя и возвращаем его ID.
-            auto userId = Core::GetCore().RegisterNewUser(j["Message"], status);
-            reply = Message(status, userId).toJson().dump();
+            auto userId = Core::GetCore().RegisterNewUser(j["Message"]["Username"], status);
+            reply = Message(status, std::to_string(userId)).toJson().dump();
+        }
+        else if (reqType == Requests::NewOrder)
+        {   
+            OrderDTO order = OrderDTO::fromJson(j["Message"]);
+            Core::GetCore().NewOrder(order, status);
+            reply = Message(status, "Order Created").toJson().dump();
         }
         else if (reqType == Requests::Balance)
-        {   
+        {
             auto balance = Core::GetCore().GetTraderBalance(j["UserId"], status);
             reply = Message(status, "Your Balance is: " + balance).toJson().dump();
         }

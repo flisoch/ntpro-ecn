@@ -2,28 +2,30 @@
 #define ORDER_HPP
 #pragma once
 
-#include <chrono>
-#include <memory>
+#include "Limit.hpp"
+#include "OrderDTO.hpp"
 
-using std::chrono::milliseconds;
+class Limit;
 
 class Order
 {
 
+public:
     enum class Direction
     {
         BUY,
         SELL
     };
 
-public:
-    Order(unsigned long traderId, Direction direction, int price, int amount, milliseconds creationTime);
-
-    int amount = 0;
-    int price = 0; // in rub
+    Order() = default;
+    Order(size_t traderId, Direction direction, double price, double amount);
+    static Order fromDTO(OrderDTO order);
+    size_t orderId;
+    double amount = 0; // usd
+    double price = 0;  // rub
     Direction direction;
-    unsigned long traderId;
-    milliseconds creationTime;
+    size_t traderId;
+    Limit *limit = nullptr;
 };
 
-#endif //ORDER_HPP
+#endif // ORDER_HPP

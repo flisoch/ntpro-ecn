@@ -2,31 +2,33 @@
 #define CORE_HPP
 #pragma once
 
-
 #include <string>
 #include <vector>
 #include <memory>
-#include "model/Trader.hpp"
+#include "dao/TraderDao.hpp"
+#include "OrderDTO.hpp"
 #include "Message.hpp"
+#include "model/LimitOrderBook.hpp"
 
 class Core
 {
 public:
+    Core();
     // "Регистрирует" нового пользователя и возвращает его ID.
-    std::string RegisterNewUser(const std::string& aUserName, std::string& status);
-   
+    size_t RegisterNewUser(const std::string &aUserName, std::string &status);
 
     // Запрос имени клиента по ID
-    Trader* GetTrader(const std::string& traderId);
-    std::string GetTraderBalance(const std::string& traderId, std::string& status);
-
-    static Core& GetCore();
+    Trader *GetTrader(size_t traderId);
+    std::string GetTraderBalance(size_t traderId, std::string &status);
+    void NewOrder(OrderDTO order, std::string &status);
+    static Core &GetCore();
+    std::string SizetToString(size_t num);
+    size_t StringToSizet(std::string str);
 
 private:
-
     std::string ValidateUsername(const std::string &aUserName);
-
-    std::vector<Trader> traders;
+    LimitOrderBook orderBook;
+    std::shared_ptr<TraderDao> traderDao;
 };
 
-#endif //CORE_HPP
+#endif // CORE_HPP

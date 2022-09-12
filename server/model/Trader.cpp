@@ -1,6 +1,6 @@
 #include "Trader.hpp"
 
-Trader::Trader(unsigned long id, std::string username)
+Trader::Trader(size_t id, std::string username)
     : id(id),
       username(username) {}
 

@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include "model/User.hpp"
 #include "Message.hpp"
+#include "OrderDTO.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -16,9 +17,9 @@ public:
 
 private:
     void SendMessage(
-        const std::string &aId,
+        size_t aId,
         const std::string &aRequestType,
-        const std::string &aMessage);
+        const nlohmann::json &aMessage);
 
     Message ReadMessage();
     
@@ -27,6 +28,7 @@ private:
 
     void ShowMenu();
     std::string Authenticate();
+    OrderDTO InputOrder();
 
     tcp::socket socket;
     boost::asio::io_service &io_service;
